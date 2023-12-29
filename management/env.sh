@@ -1,3 +1,5 @@
-export MGMT_PROJECT=<the project where you deploy your management cluster>
-export MGMT_NAME=<name of your management cluster>
-export LOCATION=<location of your management cluster>
+export MGMT_PROJECT=ml-platform
+export MGMT_NAME=kendrick-kubeflow
+export LOCATION=us-central1
+# region `us-central1`
+# zone `us-central1-f`

@@ -16,38 +16,38 @@ apiVersion: core.cnrm.cloud.google.com/v1beta1
 kind: ConfigConnectorContext
 metadata:
   name: configconnectorcontext.core.cnrm.cloud.google.com
-  namespace: project-id # kpt-set: ${project-id}
+  namespace: coach-on-tap # kpt-set: ${project-id}
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/kcc-namespace/v0.4.2
 spec:
-  googleServiceAccount: kcc-project-id@management-project-id.iam.gserviceaccount.com # kpt-set: kcc-${project-id}@${management-project-id}.iam.gserviceaccount.com
+  googleServiceAccount: kcc-coach-on-tap@ml-platform.iam.gserviceaccount.com # kpt-set: kcc-${project-id}@${management-project-id}.iam.gserviceaccount.com
 ---
 # Create GCP ServiceAccount for use by KCC to manage resources in this project
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMServiceAccount
 metadata:
-  name: kcc-project-id # kpt-set: kcc-${project-id}
+  name: kcc-coach-on-tap # kpt-set: kcc-${project-id}
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/kcc-namespace/v0.4.2
-    cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
+    cnrm.cloud.google.com/project-id: ml-platform # kpt-set: ${management-project-id}
 spec:
-  displayName: kcc-project-id # kpt-set: kcc-${project-id}
+  displayName: kcc-coach-on-tap # kpt-set: kcc-${project-id}
 ---
 # Allow KCC's Kubernetes Service Account to use the GCP ServiceAccount
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPartialPolicy
 metadata:
-  name: project-id-sa-workload-identity-binding # kpt-set: ${project-id}-sa-workload-identity-binding
+  name: coach-on-tap-sa-workload-identity-binding # kpt-set: ${project-id}-sa-workload-identity-binding
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/kcc-namespace/v0.4.2
 spec:
   resourceRef:
-    name: kcc-project-id # kpt-set: kcc-${project-id}
+    name: kcc-coach-on-tap # kpt-set: kcc-${project-id}
     apiVersion: iam.cnrm.cloud.google.com/v1beta1
     kind: IAMServiceAccount
   bindings:
     - role: roles/iam.workloadIdentityUser
       members:
-        - member: serviceAccount:management-project-id.svc.id.goog[cnrm-system/cnrm-controller-manager-project-id] # kpt-set: serviceAccount:${management-project-id}.svc.id.goog[cnrm-system/cnrm-controller-manager-${project-id}]
+        - member: serviceAccount:ml-platform.svc.id.goog[cnrm-system/cnrm-controller-manager-coach-on-tap] # kpt-set: serviceAccount:${management-project-id}.svc.id.goog[cnrm-system/cnrm-controller-manager-${project-id}]

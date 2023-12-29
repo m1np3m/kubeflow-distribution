@@ -3,6 +3,6 @@ kind: ConfigMap
 metadata:
   name: kpt-setter-config
 data:
-  name: MANAGEMENT-NAME # kpt-set: ${name}
-  gcloud.core.project: PROJECT # kpt-set: ${gcloud.core.project}
-  location: LOCATION # kpt-set: ${location}
+  name: kendrick-kubeflow # kpt-set: ${name}
+  gcloud.core.project: ml-platform # kpt-set: ${gcloud.core.project}
+  location: us-central1 # kpt-set: ${location}
